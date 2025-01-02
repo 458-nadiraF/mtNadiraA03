@@ -77,11 +77,11 @@ class handler(BaseHTTPRequestHandler):
             balance2= float(balance) 
             actType=""
             if(jenis[0:4]=='LONG'):
-                lot=float(80/closePrice)
-                tp=float(closePrice*0.05)
+                lot=float(20/closePrice)
+                tp=float(closePrice*0.04)
             if(jenis[0:4]=='SHOR'):
-                lot=float(60/closePrice)
-                tp=float(closePrice*0.016)
+                lot=float(20/closePrice)
+                tp=float(closePrice*0.04)
             if(action=="BUY"):
                 actType="ORDER_TYPE_BUY"
                 
@@ -91,10 +91,10 @@ class handler(BaseHTTPRequestHandler):
                 "symbol": "XAUUSDm",
                 "actionType": actType,
                 "volume": round(float(lot*balance2), 2),
-                "stopLoss": float(tp/2),
+                "stopLoss": 50,
                 "takeProfit": float(tp),
-                "takeProfitUnits": "RELATIVE_POINTS",
-                "stopLossUnits":"RELATIVE_POINTS",
+                "takeProfitUnits": "RELATIVE_PIPS",
+                "stopLossUnits":"RELATIVE_BALANCE_PERCENTAGE",
                 "comment":f"{messageSplit[0:1]}"
             }
             
@@ -142,6 +142,7 @@ class handler(BaseHTTPRequestHandler):
                     json=log_message,
                     headers=headers2
                 )
+            print(response_data)
             if response.status_code == 200:
                 return None
             else:
