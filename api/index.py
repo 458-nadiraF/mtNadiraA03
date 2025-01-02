@@ -54,10 +54,12 @@ class handler(BaseHTTPRequestHandler):
             #received_json = json.loads(post_data.decode('utf-8'))
             message=received_json.get('plain')
             messageSplit=message.split()
-            closePrice1=messageSplit[2]
+            tpPrice=messageSplit[2]
+            tOffset=messageSplit[3]
+            closePrice1=messageSplit[4]
             closePrice=float(closePrice1.split('\n')[0])
             action=messageSplit[0]
-            jenis=messageSplit[1]
+            slPrice=messageSplit[1]
             # accountName=received_json.get('account')
             accountStr=f'ACCOUNT_ID'
             tokenStr=f'METAAPI_TOKEN'
@@ -76,26 +78,26 @@ class handler(BaseHTTPRequestHandler):
             forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{account}/trade"  # Replace with your actual API endpoint
             balance2= float(balance) 
             actType=""
-            if(jenis[0:4]=='LONG'):
-                lot=float(20/closePrice)
-                tp=float(closePrice*0.04)
-            if(jenis[0:4]=='SHOR'):
-                lot=float(20/closePrice)
-                tp=float(closePrice*0.04)
             if(action=="BUY"):
                 actType="ORDER_TYPE_BUY"
                 
             if(action=="SELL") :
                 actType="ORDER_TYPE_SELL"
+            lot=0.4*balance2/((closePrice-slPrice)*100)
             buy_json={
                 "symbol": "XAUUSDm",
                 "actionType": actType,
-                "volume": round(float(lot*balance2), 2),
-                "stopLoss": 50,
-                "takeProfit": float(tp),
-                "takeProfitUnits": "RELATIVE_PIPS",
-                "stopLossUnits":"RELATIVE_BALANCE_PERCENTAGE",
-                "comment":f"{messageSplit[0:1]}"
+                "volume": round(float(lot), 2),
+                "stopLoss": float(slPrice),
+                "takeProfit": float(tpPrice),
+                "takeProfitUnits": "ABSOLUTE_PRICE",
+                "stopLossUnits":"ABSOLUTE_PRICE",
+                "trailingStopLoss": {
+                    "distance": {
+                      "distance": float(tOffset),
+                      "units": "RELATIVE_PIPS"
+                    }
+                  }
             }
             
             headers = {
