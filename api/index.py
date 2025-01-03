@@ -88,7 +88,7 @@ class handler(BaseHTTPRequestHandler):
                 "symbol": "XAUUSDm",
                 "actionType": actType,
                 "volume": round(float(lot), 2),
-                "stopLoss": float(slPrice),
+                "stopLoss": slPrice,
                 "takeProfit": float(tpPrice),
                 "takeProfitUnits": "ABSOLUTE_PRICE",
                 "stopLossUnits":"ABSOLUTE_PRICE",
