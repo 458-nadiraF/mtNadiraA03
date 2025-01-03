@@ -59,7 +59,7 @@ class handler(BaseHTTPRequestHandler):
             closePrice1=messageSplit[4]
             closePrice=float(closePrice1.split('\n')[0])
             action=messageSplit[0]
-            slPrice=messageSplit[1]
+            slPrice=float(messageSplit[1]) 
             # accountName=received_json.get('account')
             accountStr=f'ACCOUNT_ID'
             tokenStr=f'METAAPI_TOKEN'
