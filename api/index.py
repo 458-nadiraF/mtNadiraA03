@@ -130,7 +130,7 @@ class handler(BaseHTTPRequestHandler):
             self.wfile.write(json.dumps(response_data).encode())
            
             log_message = (
-                f" MTNadira. Execution Duration: {execution_duration}ms\n"
+                f" MTNadira A03. Execution Duration: {execution_duration}ms\n"
                 f"Response Content: {response_data}\n"
                 "-------------------------------------------\n"
             )
