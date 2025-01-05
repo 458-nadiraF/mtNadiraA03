@@ -54,12 +54,9 @@ class handler(BaseHTTPRequestHandler):
             #received_json = json.loads(post_data.decode('utf-8'))
             message=received_json.get('plain')
             messageSplit=message.split()
-            tpPrice=messageSplit[2]
-            tOffset=messageSplit[3]
-            closePrice1=messageSplit[4]
-            closePrice=float(closePrice1.split('\n')[0])
-            action=messageSplit[0]
-            slPrice=float(messageSplit[1]) 
+            closePrice1=messageSplit[1]
+            closePrice=closePrice1.split('\n')[0]
+            action=messageSplit[0] 
             # accountName=received_json.get('account')
             accountStr=f'ACCOUNT_ID'
             tokenStr=f'METAAPI_TOKEN'
@@ -78,27 +75,24 @@ class handler(BaseHTTPRequestHandler):
             forward_url = f"https://mt-client-api-v1.london.agiliumtrade.ai/users/current/accounts/{account}/trade"  # Replace with your actual API endpoint
             balance2= float(balance) 
             actType=""
-            if(action=="BUY"):
-                actType="ORDER_TYPE_BUY"
-                
-            if(action=="SELL") :
-                actType="ORDER_TYPE_SELL"
-            lot=0.4*balance2/((closePrice-slPrice)*100)
-            buy_json={
-                "symbol": "XAUUSDm",
-                "actionType": actType,
-                "volume": round(float(lot), 2),
-                "stopLoss": slPrice,
-                "takeProfit": float(tpPrice),
-                "takeProfitUnits": "ABSOLUTE_PRICE",
-                "stopLossUnits":"ABSOLUTE_PRICE",
-                "trailingStopLoss": {
-                    "distance": {
-                      "distance": float(tOffset),
-                      "units": "RELATIVE_PIPS"
-                    }
-                  }
-            }
+            if action=="BUY" or action=="SELL":
+                if(action=="BUY"):
+                    actType="ORDER_TYPE_BUY"
+                    
+                if(action=="SELL") :
+                    actType="ORDER_TYPE_SELL"
+                lot=0.4*balance2/0.2*float(closePrice)
+                buy_json={
+                    "symbol": "XAUUSDm",
+                    "actionType": actType,
+                    "volume": round(float(lot), 2),
+                    "stopLoss": 0.4,
+                    "stopLossUnits":"ABSOLUTE_BALANCE_PERCENTAGE"
+                }
+            if(action=="EXIT"):
+                buy_json={
+                    "symbol": "XAUUSDm",
+                    "actionType": "POSITIONS_CLOSE_SYMBOL"                }
             
             headers = {
                 'Accept': 'application/json',
