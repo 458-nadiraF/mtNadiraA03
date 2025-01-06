@@ -87,7 +87,7 @@ class handler(BaseHTTPRequestHandler):
                     "actionType": actType,
                     "volume": round(float(lot), 2),
                     "stopLoss": 0.4,
-                    "stopLossUnits":"ABSOLUTE_BALANCE_PERCENTAGE"
+                    "stopLossUnits":"RELATIVE_BALANCE_PERCENTAGE"
                 }
             if(action=="EXIT"):
                 buy_json={
