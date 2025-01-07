@@ -82,13 +82,13 @@ class handler(BaseHTTPRequestHandler):
                 if(action=="SELL") :
                     actType="ORDER_TYPE_SELL"
                 lot=0.6*balance2/(0.2*float(closePrice))
-                sll=float(closePrice)*(1-0.002) 
+                sll=float(closePrice)*(0.002)*100
                 buy_json={
                     "symbol": "XAUUSDm",
                     "actionType": actType,
                     "volume": round(float(lot), 2),
                     "stopLoss": sll,
-                    "stopLossUnits":"ABSOLUTE_PRICE"
+                    "stopLossUnits":"RELATIVE_PIPS"
                 }
             if(action=="EXIT"):
                 buy_json={
