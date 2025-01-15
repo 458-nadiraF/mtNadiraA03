@@ -153,9 +153,9 @@ class handler(BaseHTTPRequestHandler):
                "text": textContent
             }
             
-            responseA = requests.post(
+            responseA = requests.get(
                 tele_url,
-                data=params
+                params=params
             )
 
             headers2 = {
