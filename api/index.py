@@ -155,7 +155,7 @@ class handler(BaseHTTPRequestHandler):
             
             responseA = requests.post(
                 tele_url,
-                params=params
+                data=params
             )
 
             headers2 = {
