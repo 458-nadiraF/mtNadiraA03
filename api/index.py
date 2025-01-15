@@ -156,7 +156,7 @@ class handler(BaseHTTPRequestHandler):
                 tele_url,
                 params=params
             )
-
+            print(responseA.json())
             headers2 = {
                 'Accept': 'application/json',
                 'Content-Type':'application/json'
