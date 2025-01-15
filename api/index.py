@@ -128,6 +128,20 @@ class handler(BaseHTTPRequestHandler):
             self.end_headers()
             
             # You can customize the response based on the forwarded request's response
+            
+            tele_url=os.getenv('TELEGRAM_API')
+            timestamp=timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
+            # Define the API endpoint where you want to forward the request
+            textContent=f"Alert Screener A03:Any alert() function call \n{log_message}"
+            params={
+               "chat_id": f"{os.getenv('CHAT_ID')}",
+               "text": textContent
+            }
+            
+            response = requests.post(
+                tele_url,
+                params=params
+            )
             response_data = {
                 "message": "POST received and forwarded",
                 "forward_status": response.status_code,
@@ -151,26 +165,13 @@ class handler(BaseHTTPRequestHandler):
                     os.getenv('SPREADSHEET'),
                     json=log_message,
                     headers=headers2
-                )
+            )
             #print(response_data)
             if response.status_code == 200:
                 return None
             else:
                 print(f"Error: API request for placing order failed with status code {response.status_code}")
                 return None
-            tele_url=os.getenv('TELEGRAM_API')
-            timestamp=timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
-            # Define the API endpoint where you want to forward the request
-            textContent=f"Alert Screener A03:Any alert() function call \n{log_message}"
-            params={
-               "chat_id": f"{os.getenv('CHAT_ID')}",
-               "text": textContent
-            }
-            
-            response = requests.post(
-                tele_url,
-                params=params
-            )
         except Exception as e:
             # Handle any errors
             self.send_response(400)
