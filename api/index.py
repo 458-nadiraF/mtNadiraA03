@@ -131,7 +131,7 @@ class handler(BaseHTTPRequestHandler):
             
             tele_url=os.getenv('TELEGRAM_API')
             timestamp=timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
-                        response_data = {
+            response_data = {
                 "message": "POST received and forwarded",
                 "forward_status": response.status_code,
                 "received_json":received_json,
