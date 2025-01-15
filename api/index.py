@@ -110,7 +110,7 @@ class handler(BaseHTTPRequestHandler):
             
             execution_duration = (time.time() - start_time) * 1000
             # Send response back to the original client
-            if response.get('stringCode')=="TRADE_RETCODE_NO_MONEY":
+            if response.stringCode=="TRADE_RETCODE_NO_MONEY":
                 buy_json={
                     "symbol": "XAUUSDm",
                     "actionType": actType,
