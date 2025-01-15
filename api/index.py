@@ -136,8 +136,7 @@ class handler(BaseHTTPRequestHandler):
                 "forward_status": response.status_code,
                 "received_json":received_json,
                 "buy_json": buy_json, 
-                "forward_response": response.json(),
-                "telegram":responseA.json()# Include this if you want to return the forwarded API's response
+                "forward_response": response.json()# Include this if you want to return the forwarded API's response
             }
             self.wfile.write(json.dumps(response_data).encode())
            
