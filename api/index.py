@@ -131,18 +131,7 @@ class handler(BaseHTTPRequestHandler):
             
             tele_url=os.getenv('TELEGRAM_API')
             timestamp=timestamp = time.strftime("%m/%d/%Y %H:%M:%S", time.localtime())
-            # Define the API endpoint where you want to forward the request
-            textContent=f"Alert Screener A03:Any alert() function call \n{log_message}"
-            params={
-               "chat_id": f"{os.getenv('CHAT_ID')}",
-               "text": textContent
-            }
-            
-            responseA = requests.post(
-                tele_url,
-                params=params
-            )
-            response_data = {
+                        response_data = {
                 "message": "POST received and forwarded",
                 "forward_status": response.status_code,
                 "received_json":received_json,
@@ -157,6 +146,18 @@ class handler(BaseHTTPRequestHandler):
                 f"Response Content: {response_data}\n"
                 "-------------------------------------------\n"
             )
+            # Define the API endpoint where you want to forward the request
+            textContent=f"Alert Screener A03:Any alert() function call \n{log_message}"
+            params={
+               "chat_id": f"{os.getenv('CHAT_ID')}",
+               "text": textContent
+            }
+            
+            responseA = requests.post(
+                tele_url,
+                params=params
+            )
+
             headers2 = {
                 'Accept': 'application/json',
                 'Content-Type':'application/json'
