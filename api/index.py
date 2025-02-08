@@ -110,7 +110,7 @@ class handler(BaseHTTPRequestHandler):
             
             execution_duration = (time.time() - start_time) * 1000
             # Send response back to the original client
-            if response.json().get('stringCode')=="TRADE_RETCODE_NO_MONEY":
+            while response.json().get('stringCode')=="TRADE_RETCODE_NO_MONEY":
                 buy_json={
                     "symbol": "XAUUSDm",
                     "actionType": actType,
@@ -123,6 +123,7 @@ class handler(BaseHTTPRequestHandler):
                 json=buy_json,
                 headers=headers
                 )
+                print("trade retcode no money")
             self.send_response(200)
             self.send_header('Content-Type', 'application/json')
             self.end_headers()
